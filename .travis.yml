@@ -1,0 +1,23 @@
+sudo:required
+language: generic
+services:
+  - docker
+
+before_install:
+  - docker build -t bhavani/multi-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true bhavani/multi-test npm test
+
+after_success:
+  - docker build -t bhavani/multi-client ./client
+  - docker build -t bhavani/multi-nginx ./nginx
+  - docker build -t bhavani/multi-server ./server
+  - docker build -t bhavani/multi-worker ./worker
+  #Log in to the Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #Take those images and push them to docker hub
+  - docker push bhavani/multi-client
+  - docker push bhavani/multi-nginx
+  - docker push bhavani/multi-server
+  - docker push bhavani/multi-worker
