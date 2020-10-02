@@ -16,7 +16,7 @@ after_success:
   #Log in to the Docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #Take those images and push them to docker hub
-  - docker push bhavani/multi-client
-  - docker push bhavani/multi-nginx
-  - docker push bhavani/multi-server
-  - docker push bhavani/multi-worker
+  - docker push docker.io/bhavani/multi-client
+  - docker push docker.io/bhavani/multi-nginx
+  - docker push docker.io/bhavani/multi-server
+  - docker push docker.io/bhavani/multi-worker
